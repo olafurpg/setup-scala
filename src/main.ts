@@ -1,16 +1,11 @@
-import * as core from '@actions/core';
-import {wait} from './wait'
+import * as core from "@actions/core";
+import { install } from "./install";
 
 async function run() {
   try {
-    const ms = core.getInput('milliseconds');
-    console.log(`Waiting ${ms} milliseconds ...`)
-
-    core.debug((new Date()).toTimeString())
-    wait(parseInt(ms));
-    core.debug((new Date()).toTimeString())
-
-    core.setOutput('time', new Date().toTimeString());
+    const version = core.getInput("java-version", { required: true });
+    console.log(`Installing Java version '${version}'`);
+    await install(version);
   } catch (error) {
     core.setFailed(error.message);
   }
