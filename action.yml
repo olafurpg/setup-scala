@@ -1,10 +1,10 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'setup-java'
+description: 'Installs AdoptOpenJDK via Jabba'
+author: 'Olafur Pall Geirsson'
 inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  java-version:
+    description: 'The Java version to install, for example "8" or "11"'
+    default: '8'
 runs:
   using: 'node12'
   main: 'lib/main.js'

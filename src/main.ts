@@ -3,7 +3,7 @@ import { install } from "./install";
 
 async function run() {
   try {
-    const version = core.getInput("java-version");
+    const version = core.getInput("java-version", { required: true });
     console.log(`Installing Java version '${version}'`);
     await install(parseInt(version));
   } catch (error) {
