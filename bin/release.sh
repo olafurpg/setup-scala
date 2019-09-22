@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eux
 git add .
-git diff
+git diff --exit-code
 version=$1
 git checkout -b releases/$version
 sed '/node_modules/d' .gitignore
