@@ -21,7 +21,9 @@ function installJava(javaVersion: string) {
     .stdout.trim();
   console.log(`Installing ${toInstall}`);
   shell.exec(`${jabba} install ${toInstall}`);
-  const javaHome = shell.exec(`${jabba} which --home ${toInstall}`).stdout;
+  const javaHome = shell
+    .exec(`${jabba} which --home ${toInstall}`)
+    .stdout.trim();
   core.exportVariable("JAVA_HOME", javaHome);
   core.addPath(path.join(javaHome, "path"));
 }
