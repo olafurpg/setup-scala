@@ -1,10 +1,14 @@
-name: 'setup-java'
-description: 'Installs AdoptOpenJDK via Jabba'
-author: 'Olafur Pall Geirsson'
+name: "setup-java"
+description: "Installs AdoptOpenJDK via Jabba"
+author: "Olafur Pall Geirsson"
 inputs:
   java-version:
-    description: 'The Java version to install, for example "8" or "11"'
-    default: '8'
+    description: >
+      The Java version to install, a string matching the output format
+      from  `jabba ls-remote`. For example, "adopt@1.8" for the latest
+      AdoptOpenJDK 8 version, "adopt@1.11" for the latest AdoptOpenJDK 11
+      version, or "graalvm@"' for the latest GraalVM version.
+    default: "adopt@1.8"
 runs:
-  using: 'node12'
-  main: 'lib/main.js'
+  using: "node12"
+  main: "lib/main.js"
