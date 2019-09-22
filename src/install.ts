@@ -25,7 +25,7 @@ function installJava(javaVersion: string) {
     .exec(`${jabba} which --home ${toInstall}`)
     .stdout.trim();
   core.exportVariable("JAVA_HOME", javaHome);
-  core.addPath(path.join(javaHome, "path"));
+  core.addPath(path.join(javaHome, "bin"));
 }
 function installSbt() {
   const bin = path.join(homedir, "bin");
