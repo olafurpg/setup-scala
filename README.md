@@ -26,7 +26,7 @@ In your GitHub Actions workflow, add a `uses:` declaration before calling the
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v1
-+     - uses: olafurpg/setup-scala@v1
++     - uses: olafurpg/setup-scala@v2
       - name: Compile
         run: sbt compile
 ```
@@ -45,7 +45,7 @@ The default Java version is the latest OpenJDK 8 HotSpot version via
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v1
-      - uses: olafurpg/setup-scala@v1
+      - uses: olafurpg/setup-scala@v2
 +       with:
 +         java-version: adopt@1.11
       - name: Compile
