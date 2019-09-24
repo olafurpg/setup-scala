@@ -16,7 +16,9 @@ function installJava(javaVersion: string) {
       silent: true
     })
     .exec("bash");
-  const jabba = path.join(homedir, ".jabba", "bin", "jabba");
+  const jabbaBin = path.join(homedir, ".jabba", "bin");
+  core.addPath(jabbaBin);
+  const jabba = path.join(jabbaBin, "jabba");
   const toInstall = shell
     .exec(`${jabba} ls-remote`)
     .grep(javaVersion)

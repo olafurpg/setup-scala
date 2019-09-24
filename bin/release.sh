@@ -11,6 +11,7 @@ yarn install
 yarn run build
 yarn install --prod
 sed -i '' '/node_modules/d' .gitignore
+sed -i '' '/lib/d' .gitignore
 git add .
 git commit -m "Generate artifacts"
 git push -f origin master-node_modules
