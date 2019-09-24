@@ -1,5 +1,6 @@
 #!/bin/bash
 set -eux
+version=$1
 git add .
 git diff --exit-code
 current_branch=$(git rev-parse --abbrev-ref HEAD)
@@ -15,6 +16,8 @@ sed -i '' '/lib/d' .gitignore
 git add .
 git commit -m "Generate artifacts"
 git push -f origin master-node_modules
+git tag -a "v$version" -m "v$version"
+git push origin "v$version"
 git co master
 rm -rf node_modules
 yarn install
