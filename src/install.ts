@@ -49,6 +49,6 @@ function installSbt() {
 
 function curl(url: string, outputFile: string) {
   shell.exec(`curl -sL ${url}`, { silent: true }).to(outputFile);
-  shell.chmod("+x", outputFile);
+  shell.chmod(755, outputFile);
   console.log(`Downloaded '${path.basename(outputFile)}'`);
 }
