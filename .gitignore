@@ -36,58 +36,48 @@ coverage
 
 # Bower dependency directory (https://bower.io/)
 bower_components
+*.class
+*.log
 
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
-
-# Dependency directories
-jspm_packages/
-
-# TypeScript v1 declaration files
-typings/
-
-# TypeScript cache
-*.tsbuildinfo
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# dotenv environment variables file
-.env
-.env.test
-
-# parcel-bundler cache (https://parceljs.org/)
+# sbt specific
 .cache
+.history
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+**/.bloop
 
-# next.js build output
-.next
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
 
-# nuxt.js build output
-.nuxt
+.idea
 
-# vuepress build output
-.vuepress/dist
+# ENSIME specific
+.ensime_cache/
+.ensime
 
-# Serverless directories
-.serverless/
+.metals/
+metals.sbt
 
-# FuseBox cache
-.fusebox/
+.vscode/
 
-# DynamoDB Local files
-.dynamodb/
+local.*
+
+.DS_Store
+
+node_modules
+
+lib/core/metadata.js
+lib/core/MetadataBlog.js
+
+website/translated_docs
+website/build/
+website/yarn.lock
+website/node_modules
+website/i18n/*
+!website/i18n/en.json
