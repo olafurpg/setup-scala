@@ -6,10 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - run: npm ci
-    - run: npm run build
+    - run: yarn run build
     - uses: ./
-    - name: Test sbt build
-      run: |
-        cd test-build
-        sbt run
+    - run: cd test-build && sbt run

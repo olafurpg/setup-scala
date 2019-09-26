@@ -39,7 +39,10 @@ function installSbt() {
   const bin = path.join(homedir, "bin");
   shell.mkdir(bin);
   core.addPath(bin);
-  curl("https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt", "sbt");
+  curl(
+    "https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt",
+    path.join(bin, "sbt")
+  );
   curl(
     "https://raw.githubusercontent.com/coursier/sbt-extras/master/sbt",
     path.join(bin, "csbt")
