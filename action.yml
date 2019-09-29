@@ -9,6 +9,9 @@ inputs:
       AdoptOpenJDK 8 version, "adopt@1.11" for the latest AdoptOpenJDK 11
       version, or "graalvm@" for the latest GraalVM version.
     default: "adopt@1.8"
+  jabba-version:
+    description: The Jabba version to install.
+    default: "0.11.2"
 runs:
   using: "node12"
   main: "lib/main.js"

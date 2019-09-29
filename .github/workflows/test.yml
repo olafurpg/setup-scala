@@ -7,10 +7,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macOS-latest]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
     steps:
-    - uses: actions/checkout@v1
-    - run: yarn install
-    - run: yarn run build
-    - uses: ./
-    - run: cd test-build && sbt run
+      - uses: actions/checkout@v1
+      - run: yarn install
+      - run: yarn run build
+      - uses: ./
+      - run: cd test-build && sbt run
+        shell: bash

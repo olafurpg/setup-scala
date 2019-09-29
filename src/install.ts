@@ -3,22 +3,47 @@ import * as shell from "shelljs";
 import * as path from "path";
 
 const homedir = require("os").homedir();
+const bin = path.join(homedir, "bin");
 
-export async function install(javaVersion: string) {
-  installJava(javaVersion);
+export async function install(javaVersion: string, jabbaVersion: string) {
+  installJava(javaVersion, jabbaVersion);
   installSbt();
 }
 
-function installJava(javaVersion: string) {
+function jabbaUrlSuffix(): string {
+  const runnerOs = shell.env["RUNNER_OS"] || "undefined";
+  switch (runnerOs.toLowerCase()) {
+    case "linux":
+      return "linux-amd64";
+    case "macos":
+      return "darwin-amd64";
+    case "windows":
+      return "windows-amd64.exe";
+    default:
+      throw new Error(
+        `unknown runner OS: ${runnerOs}, expected one of Linux, macOS or Windows.`
+      );
+  }
+}
+
+function isWindows(): boolean {
+  return shell.env["RUNNER_OS"] === "Windows";
+}
+
+function jabbaName(): string {
+  if (isWindows()) return "jabba.exe";
+  else return "jabba";
+}
+
+function installJava(javaVersion: string, jabbaVersion: string) {
   core.startGroup("Install Java");
-  shell
-    .exec("curl -sL https://github.com/shyiko/jabba/raw/master/install.sh", {
-      silent: true
-    })
-    .exec("bash");
-  const jabbaBin = path.join(homedir, ".jabba", "bin");
-  core.addPath(jabbaBin);
-  const jabba = path.join(jabbaBin, "jabba");
+  core.addPath(bin);
+  const jabbaUrl = `https://github.com/shyiko/jabba/releases/download/${jabbaVersion}/jabba-${jabbaVersion}-${jabbaUrlSuffix()}`;
+  shell.mkdir(bin);
+  const jabba = path.join(bin, jabbaName());
+  shell.set("-ev");
+  shell.exec(`curl -sL -o ${jabba} ${jabbaUrl}`, { silent: true });
+  shell.chmod(755, jabba);
   const toInstall = shell
     .exec(`${jabba} ls-remote`)
     .grep(javaVersion)
@@ -36,8 +61,6 @@ function installJava(javaVersion: string) {
 
 function installSbt() {
   core.startGroup("Install sbt");
-  const bin = path.join(homedir, "bin");
-  shell.mkdir(bin);
   core.addPath(bin);
   curl(
     "https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt",
