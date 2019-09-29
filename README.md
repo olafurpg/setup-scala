@@ -10,6 +10,7 @@ and sbt.
 - For faster startup, the `csbt` command is installed using the Coursier-based
   [sbt-extras](https://github.com/paulp/sbt-extras/) launcher. This launcher
   does not work with all builds, only use `csbt` if you know what you are doing.
+- Cross-platform: works on Linux, macOS, Windows.
 
 ## Usage:
 
@@ -26,7 +27,7 @@ In your GitHub Actions workflow, add a `uses:` declaration before calling the
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v1
-+     - uses: olafurpg/setup-scala@v2
++     - uses: olafurpg/setup-scala@v5
       - name: Compile
         run: sbt compile
 ```
@@ -45,7 +46,7 @@ The default Java version is the latest OpenJDK 8 HotSpot version via
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v1
-      - uses: olafurpg/setup-scala@v2
+      - uses: olafurpg/setup-scala@v5
 +       with:
 +         java-version: adopt@1.11
       - name: Compile
