@@ -58,3 +58,60 @@ More Java version examples:
 - `graalvm@`: the latest GraalVM
 - `openjdk@1.14`: the latest OpenJDK 14 version
 - `zulu@1.11`: the latest Zulu OpenJDK 11
+
+## Tips and tricks
+
+Some suggestions that may be helpful when using GitHub Actions.
+
+### Disable `fail_fast` strategy
+
+By default, GitHub Actions stops running jobs on the first failure. Add the
+following configuration to ensure that all jobs run on every PR even if one job
+fails.
+
+```diff
++++ .github/workflows/ci.yml
+  name: CI
+  on: [push]
+  jobs:
+    build:
+      runs-on: ubuntu-latest
++     strategy:
++       fail_fast: false
+      steps:
+      - uses: actions/checkout@v1
+      - uses: olafurpg/setup-scala@v2
+      - name: Compile
+        run: sbt compile
+```
+
+### Browsing raw logs
+
+Searching through large logs in the GitHub Actions web UI can be slow sometimes.
+It can be faster to look at the raw logs instead.
+
+![](https://i.imgur.com/Xu29gwb.png)
+
+### Configuring Windows jobs
+
+When running jobs on Windows, you may want to default to the `bash` shell and
+configure git to disable Windows line feeds.
+
+```diff
++++ .github/workflows/ci.yml
+  name: CI
+  on: [push]
+  jobs:
+    build:
+-     runs-on: ubuntu-latest
++     runs-on: windows-latest
+      steps:
++     - name: Configure git
++       run: "git config --global core.autocrlf false"
++       shell: bash
+      - uses: actions/checkout@v1
+      - uses: olafurpg/setup-scala@v2
+      - name: Compile
++       shell: bash
+        run: sbt compile
+```
