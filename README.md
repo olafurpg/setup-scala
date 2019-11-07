@@ -63,7 +63,7 @@ More Java version examples:
 
 Some suggestions that may be helpful when using GitHub Actions.
 
-### Disable `fail_fast` strategy
+### Disable `fail-fast` strategy
 
 By default, GitHub Actions stops running jobs on the first failure. Add the
 following configuration to ensure that all jobs run on every PR even if one job
@@ -77,7 +77,7 @@ fails.
     build:
       runs-on: ubuntu-latest
 +     strategy:
-+       fail_fast: false
++       fail-fast: false
       steps:
       - uses: actions/checkout@v1
       - uses: olafurpg/setup-scala@v2
