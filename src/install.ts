@@ -6,8 +6,13 @@ const homedir = require("os").homedir();
 const bin = path.join(homedir, "bin");
 
 export async function install(javaVersion: string, jabbaVersion: string) {
+  setEnvironmentVariableCI();
   installJava(javaVersion, jabbaVersion);
   installSbt();
+}
+
+function setEnvironmentVariableCI() {
+  core.exportVariable("CI", "true");
 }
 
 function jabbaUrlSuffix(): string {
