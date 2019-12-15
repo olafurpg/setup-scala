@@ -115,3 +115,29 @@ configure git to disable Windows line feeds.
 +       shell: bash
         run: sbt compile
 ```
+
+### Faster checkout of big repos
+
+Your repository can have a lot of commits, or branches with bulk resources.
+The v2 version of `actions/checkout` doesn't fetch a whole repo by default 
+that can speed up builds greatly. But an additional configuration can be 
+required to fetch tags up to some level of depth for some builds which check 
+binary compatibility with previous tagged release from the branch. 
+```diff
++++ .github/workflows/ci.yml
+  name: CI
+  on: [push]
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+-     - uses: actions/checkout@v1
++     - uses: actions/checkout@v2
++       with:
++         fetch-depth: 100
++     - name: Fetch tags
++       run: git fetch --depth=100 origin +refs/tags/*:refs/tags/*
+      - uses: olafurpg/setup-scala@v2
+      - name: Compile
+        run: sbt compile
+```
