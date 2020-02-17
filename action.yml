@@ -1,4 +1,4 @@
-name: "setup-java"
+name: "setup-scala"
 description: "Installs AdoptOpenJDK via Jabba"
 author: "Olafur Pall Geirsson"
 inputs:
