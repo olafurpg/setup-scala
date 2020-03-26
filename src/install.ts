@@ -55,7 +55,7 @@ function installJava(javaVersion: string, jabbaVersion: string) {
     .head({ "-n": 1 })
     .stdout.trim();
   if (!toInstall) {
-    core.setFailed(`Couldn't find Java ${javaVersion}`);
+    core.setFailed(`Couldn't find Java ${javaVersion}. To fix this problem, run 'jabba ls-remote' to see the list of valid Java versions.`);
     return;
   }
   console.log(`Installing ${toInstall}`);
