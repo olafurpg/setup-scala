@@ -54,8 +54,16 @@ function installJava(javaVersion: string, jabbaVersion: string) {
     .grep(javaVersion)
     .head({ "-n": 1 })
     .stdout.trim();
+  if (!toInstall) {
+    core.setFailed(`Couldn't find Java ${javaVersion}. To fix this problem, run 'jabba ls-remote' to see the list of valid Java versions.`);
+    return;
+  }
   console.log(`Installing ${toInstall}`);
-  shell.exec(`${jabba} install ${toInstall}`);
+  const result = shell.exec(`${jabba} install ${toInstall}`);
+  if (result.code > 0) {
+    core.setFailed(`Failed to install Java ${javaVersion}, Jabba stderr: ${result.stderr}`);
+    return;
+  }
   const javaHome = shell
     .exec(`${jabba} which --home ${toInstall}`)
     .stdout.trim();
