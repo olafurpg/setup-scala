@@ -1,6 +1,6 @@
 # Setup Scala GitHub Action
 
-A GitHub Action to install Java via [Jabba](https://github.com/features/actions)
+A GitHub Action to install Java via [Jabba](https://github.com/shyiko/jabba)
 and sbt.
 
 - Configurable Java version: supports OpenJDK, GraalVM, Zulu and any other Java
