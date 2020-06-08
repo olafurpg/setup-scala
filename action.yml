@@ -1,5 +1,5 @@
 name: "setup-scala"
-description: "Installs AdoptOpenJDK via Jabba"
+description: "Installs AdoptOpenJDK via Jabba, and Bloop"
 author: "Olafur Pall Geirsson"
 inputs:
   java-version:
@@ -12,6 +12,9 @@ inputs:
   jabba-version:
     description: The Jabba version to install.
     default: "0.11.2"
+  bloop-version:
+    description: The version of Bloop to install.
+    default: "1.4.1"
 runs:
   using: "node12"
   main: "lib/main.js"

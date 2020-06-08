@@ -5,10 +5,11 @@ import * as path from "path";
 const homedir = require("os").homedir();
 const bin = path.join(homedir, "bin");
 
-export async function install(javaVersion: string, jabbaVersion: string) {
+export async function install(javaVersion: string, jabbaVersion: string, bloopVersion: string) {
   setEnvironmentVariableCI();
   installJava(javaVersion, jabbaVersion);
   installSbt();
+  installBloop(bloopVersion);
 }
 
 function setEnvironmentVariableCI() {
@@ -31,6 +32,22 @@ function jabbaUrlSuffix(): string {
   }
 }
 
+function bloopUrlSuffix(): string {
+  const runnerOs = shell.env["RUNNER_OS"] || "undefined";
+  switch (runnerOs.toLowerCase()) {
+    case "linux":
+      return "x86_64-pc-linux";
+    case "macos":
+      return "x86_64-apple-darwin";
+    case "windows":
+      return "x86_64-pc-win32.exe";
+    default:
+      throw new Error(
+        `unknown runner OS: ${runnerOs}, expected one of Linux, macOS or Windows.`
+      );
+  }
+}
+
 function isWindows(): boolean {
   return shell.env["RUNNER_OS"] === "Windows";
 }
@@ -38,6 +55,11 @@ function isWindows(): boolean {
 function jabbaName(): string {
   if (isWindows()) return "jabba.exe";
   else return "jabba";
+}
+
+function bloopName(): string {
+  if (isWindows()) return "bloop.exe";
+  else return "bloop";
 }
 
 function installJava(javaVersion: string, jabbaVersion: string) {
@@ -86,9 +108,17 @@ function installSbt() {
   core.endGroup();
 }
 
+function installBloop(bloopVersion: string) {
+  core.startGroup("Install Bloop");
+  curl(
+    `https://github.com/scalacenter/bloop/releases/download/v${bloopVersion}/bloop-${bloopUrlSuffix()}`,
+    path.join(bin, bloopName())
+  );
+  core.endGroup();
+}
+
 function curl(url: string, outputFile: string) {
-  shell.exec(`curl -sL ${url}`, { silent: true }).to(outputFile);
+  shell.exec(`curl -sL ${url} -o ${outputFile}`, { silent: true });
   shell.chmod(755, outputFile);
-  shell.cat(outputFile);
   console.log(`Downloaded '${path.basename(outputFile)}' to ${outputFile}`);
 }

@@ -15,3 +15,7 @@ jobs:
       - uses: ./
       - run: cd test-build && sbt run
         shell: bash
+      - run: ls ~/bin
+        shell: bash
+      - run: cd test-build && sbt bloopInstall && bloop run test-build
+        shell: bash
