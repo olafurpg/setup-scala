@@ -49,23 +49,29 @@ function installJava(javaVersion: string, jabbaVersion: string) {
   shell.set("-ev");
   shell.exec(`curl -sL -o ${jabba} ${jabbaUrl}`, { silent: true });
   shell.chmod(755, jabba);
-  const toInstall = shell
+  // if a string using the 'version=url' format is provided, respect it (e.g. 1.14.0=tgz+https://link.to.tarball.tgz)
+  const javaVersionSearch = javaVersion.split('=')[0];
+  const useVersion = shell
     .exec(`${jabba} ls-remote`)
-    .grep(javaVersion)
+    .grep(javaVersionSearch)
     .head({ "-n": 1 })
     .stdout.trim();
-  if (!toInstall) {
-    core.setFailed(`Couldn't find Java ${javaVersion}. To fix this problem, run 'jabba ls-remote' to see the list of valid Java versions.`);
+  var toInstall = useVersion;
+  if (!useVersion) {
+    core.setFailed(`Couldn't find Java ${javaVersionSearch}. To fix this problem, run 'jabba ls-remote' to see the list of valid Java versions.`);
     return;
+  }
+  if (javaVersion !== javaVersionSearch) {
+    toInstall = javaVersion;
   }
   console.log(`Installing ${toInstall}`);
   const result = shell.exec(`${jabba} install ${toInstall}`);
   if (result.code > 0) {
-    core.setFailed(`Failed to install Java ${javaVersion}, Jabba stderr: ${result.stderr}`);
+    core.setFailed(`Failed to install Java ${toInstall}, Jabba stderr: ${result.stderr}`);
     return;
   }
   const javaHome = shell
-    .exec(`${jabba} which --home ${toInstall}`)
+    .exec(`${jabba} which --home ${useVersion}`)
     .stdout.trim();
   core.exportVariable("JAVA_HOME", javaHome);
   core.addPath(path.join(javaHome, "bin"));
