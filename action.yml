@@ -1,5 +1,5 @@
 name: "setup-scala"
-description: "Installs AdoptOpenJDK via Jabba"
+description: "GitHub Action to install any version of Java (GraalVM, Java 8, Java 11, Java 14, ...)"
 author: "Olafur Pall Geirsson"
 inputs:
   java-version:
