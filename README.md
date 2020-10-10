@@ -59,7 +59,7 @@ More Java version examples:
 - `graalvm@`: the latest GraalVM
 - `openjdk@1.14`: the latest OpenJDK 14 version
 - `zulu@1.11`: the latest Zulu OpenJDK 11
-- `graalvm@20.2.0=tgz+https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java11-linux-aarch64-20.2.0.tar.gz`:
+- `graalvm@20.2.0=tgz+https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java11-linux-amd64-20.2.0.tar.gz`:
   custom Java version from a URL
 
 ## Tips and tricks
