@@ -16,8 +16,9 @@ sed -i '' '/lib/d' .gitignore
 git add .
 git commit -m "Generate artifacts"
 git push -f origin master-node_modules
+git tag -d "v$version" || true
 git tag -a "v$version" -m "v$version"
-git push origin "v$version"
+git push -f origin "v$version"
 git co master
 rm -rf node_modules
 yarn install
