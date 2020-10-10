@@ -49,27 +49,57 @@ function installJava(javaVersion: string, jabbaVersion: string) {
   shell.set("-ev");
   shell.exec(`curl -sL -o ${jabba} ${jabbaUrl}`, { silent: true });
   shell.chmod(755, jabba);
+  const jabbaInstall = javaVersion.includes("=")
+    ? installJavaByExactVersion(javaVersion)
+    : installJavaByFuzzyVersion(jabba, javaVersion);
+  if (!jabbaInstall) return;
+  console.log(`Installing ${jabbaInstall.name}`);
+  const result = shell.exec(`${jabba} install ${jabbaInstall.install}`);
+  if (result.code > 0) {
+    core.setFailed(
+      `Failed to install Java ${javaVersion}, Jabba stderr: ${result.stderr}`
+    );
+    return;
+  }
+  const javaHome = shell
+    .exec(`${jabba} which --home ${jabbaInstall.name}`)
+    .stdout.trim();
+  core.exportVariable("JAVA_HOME", javaHome);
+  core.addPath(path.join(javaHome, "bin"));
+  core.endGroup();
+}
+
+interface JabbaInstall {
+  name: string;
+  install: string;
+}
+
+function installJavaByFuzzyVersion(
+  jabba: string,
+  javaVersion: string
+): JabbaInstall | undefined {
   const toInstall = shell
     .exec(`${jabba} ls-remote`)
     .grep(javaVersion)
     .head({ "-n": 1 })
     .stdout.trim();
   if (!toInstall) {
-    core.setFailed(`Couldn't find Java ${javaVersion}. To fix this problem, run 'jabba ls-remote' to see the list of valid Java versions.`);
+    core.setFailed(
+      `Couldn't find Java ${javaVersion}. To fix this problem, run 'jabba ls-remote' to see the list of valid Java versions.`
+    );
     return;
   }
-  console.log(`Installing ${toInstall}`);
-  const result = shell.exec(`${jabba} install ${toInstall}`);
-  if (result.code > 0) {
-    core.setFailed(`Failed to install Java ${javaVersion}, Jabba stderr: ${result.stderr}`);
-    return;
-  }
-  const javaHome = shell
-    .exec(`${jabba} which --home ${toInstall}`)
-    .stdout.trim();
-  core.exportVariable("JAVA_HOME", javaHome);
-  core.addPath(path.join(javaHome, "bin"));
-  core.endGroup();
+  return {
+    name: toInstall,
+    install: toInstall,
+  };
+}
+
+function installJavaByExactVersion(javaVersion: string): JabbaInstall {
+  return {
+    name: javaVersion.split("=")[0],
+    install: javaVersion,
+  };
 }
 
 function installSbt() {
