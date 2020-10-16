@@ -9,6 +9,8 @@ export async function install(javaVersion: string, jabbaVersion: string) {
   setEnvironmentVariableCI();
   installJava(javaVersion, jabbaVersion);
   installSbt();
+  installCoursier();
+  installSbtn();
 }
 
 function setEnvironmentVariableCI() {
@@ -113,6 +115,21 @@ function installSbt() {
     "https://raw.githubusercontent.com/coursier/sbt-extras/master/sbt",
     path.join(bin, "csbt")
   );
+  core.endGroup();
+}
+
+function installCoursier() {
+  core.startGroup("Install Coursier");
+  curl(
+    "https://git.io/coursier-cli-linux",
+    path.join(bin, "coursier")
+  );
+  core.endGroup();
+}
+
+function installSbtn() {
+  core.startGroup("Install sbtn");
+  shell.exec(`coursier install sbtn`);
   core.endGroup();
 }
 
