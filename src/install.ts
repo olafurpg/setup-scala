@@ -19,7 +19,15 @@ function jabbaUrlSuffix(): string {
   const runnerOs = shell.env["RUNNER_OS"] || "undefined";
   switch (runnerOs.toLowerCase()) {
     case "linux":
-      return "linux-amd64";
+      const arch = shell.exec("uname -m", { silent: true }).stdout;
+      switch (arch) {
+        case "arm64":
+        case "aarch64":
+          return "linux-arm64";
+
+        default:
+          return "linux-amd64";
+      }
     case "macos":
       return "darwin-amd64";
     case "windows":
