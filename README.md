@@ -28,7 +28,7 @@ In your GitHub Actions workflow, add a `uses:` declaration before calling the
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v1
-+     - uses: olafurpg/setup-scala@v10
++     - uses: olafurpg/setup-scala@v11
       - name: Compile
         run: sbt compile
 ```
@@ -47,7 +47,7 @@ The default Java version is the latest OpenJDK 8 HotSpot version via
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v1
-      - uses: olafurpg/setup-scala@v10
+      - uses: olafurpg/setup-scala@v11
 +       with:
 +         java-version: adopt@1.11
       - name: Compile
@@ -83,7 +83,7 @@ fails.
 +       fail-fast: false
       steps:
       - uses: actions/checkout@v1
-      - uses: olafurpg/setup-scala@v10
+      - uses: olafurpg/setup-scala@v11
       - name: Compile
         run: sbt compile
 ```
@@ -113,7 +113,7 @@ configure git to disable Windows line feeds.
 +       run: "git config --global core.autocrlf false"
 +       shell: bash
       - uses: actions/checkout@v1
-      - uses: olafurpg/setup-scala@v10
+      - uses: olafurpg/setup-scala@v11
       - name: Compile
 +       shell: bash
         run: sbt compile
@@ -141,7 +141,7 @@ compatibility with previous tagged release from the branch.
 +         fetch-depth: 100
 +     - name: Fetch tags
 +       run: git fetch --depth=100 origin +refs/tags/*:refs/tags/*
-      - uses: olafurpg/setup-scala@v10
+      - uses: olafurpg/setup-scala@v11
       - name: Compile
         run: sbt compile
 ```
