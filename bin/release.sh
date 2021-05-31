@@ -4,9 +4,9 @@ version=$1
 git add .
 git diff --exit-code
 current_branch=$(git rev-parse --abbrev-ref HEAD)
-test 'master' = $current_branch
+test 'main' = $current_branch
 git checkout master-node_modules
-git reset --hard master
+git reset --hard main
 rm -rf node_modules
 yarn install
 yarn run build
@@ -19,6 +19,6 @@ git push -f origin master-node_modules
 git tag -d "v$version" || true
 git tag -a "v$version" -m "v$version"
 git push -f origin "v$version"
-git co master
+git co main
 rm -rf node_modules
 yarn install
