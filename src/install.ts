@@ -114,8 +114,12 @@ function installSbt() {
   core.startGroup("Install sbt");
   core.addPath(bin);
   curl(
-    "https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt",
+    "https://raw.githubusercontent.com/sbt/sbt/develop/sbt",
     path.join(bin, "sbt")
+  );
+  curl(
+    "https://raw.githubusercontent.com/dwijnand/sbt-extras/master/sbt",
+    path.join(bin, "sbtx")
   );
   curl(
     "https://raw.githubusercontent.com/coursier/sbt-extras/master/sbt",

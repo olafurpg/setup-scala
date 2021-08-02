@@ -5,13 +5,11 @@ sbt.
 
 - Configurable Java version: supports OpenJDK, GraalVM, Zulu and any other Java
   version that's installable via Jabba.
-- The `sbt` command is installed using the
-  [paulp/sbt-extras](https://github.com/paulp/sbt-extras/) launcher.
-- For faster startup, the `csbt` command is installed using the Coursier-based
-  [coursier/sbt-extras](https://github.com/coursier/sbt-extras/) launcher. This
-  launcher does not work with all builds, only use `csbt` if you know what you
-  are doing.
 - Cross-platform: works on Linux, macOS, Windows.
+- The `sbt` command is provided, with the official sbt launch script.
+- The following alternate sbt launch scripts are also provided:
+  - `sbtx` runs the [sbt-extras](https://github.com/dwijnand/sbt-extras/) launcher.
+  - `csbt` runs the [Coursier-based sbt-extras](https://github.com/coursier/sbt-extras/) launcher.
 
 ## Usage:
 
