@@ -13,7 +13,7 @@ inputs:
     description: The Jabba version to install.
     default: "0.11.2"
 runs:
-  using: "node12"
+  using: "node16"
   main: "lib/main.js"
 branding:
   icon: "download"
