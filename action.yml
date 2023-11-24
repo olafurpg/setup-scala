@@ -11,7 +11,7 @@ inputs:
     default: "adopt@1.8"
   jabba-version:
     description: The Jabba version to install.
-    default: "0.11.2"
+    default: "0.13.0"
 runs:
   using: "node16"
   main: "lib/main.js"
