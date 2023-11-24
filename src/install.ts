@@ -51,7 +51,7 @@ function jabbaName(): string {
 function installJava(javaVersion: string, jabbaVersion: string) {
   core.startGroup("Install Java");
   core.addPath(bin);
-  const jabbaUrl = `https://github.com/shyiko/jabba/releases/download/${jabbaVersion}/jabba-${jabbaVersion}-${jabbaUrlSuffix()}`;
+  const jabbaUrl = `https://github.com/Jabba-Team/jabba/releases/download/${jabbaVersion}/jabba-${jabbaVersion}-${jabbaUrlSuffix()}`;
   shell.mkdir(bin);
   const jabba = path.join(bin, jabbaName());
   shell.set("-ev");
